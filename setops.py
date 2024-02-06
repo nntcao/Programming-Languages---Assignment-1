@@ -40,6 +40,15 @@ def main():
     print(remove_symbol("Dog jump over moon. And shot, at sun. And become world.", "."))
     print(to_lower("aaAAAAaa!.AAaaAAA"))
 
+    #file1 = open(set1)
+    #set1 = file1.read()
+    #print(set1)
+
+    #file2 = open(set2)
+    #set2 = file2.read()
+    #print(set2)
+    #file1.close()
+    #file2.close()
 
 if __name__ == "__main__":
     main()
