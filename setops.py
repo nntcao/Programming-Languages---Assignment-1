@@ -8,7 +8,7 @@ def delimiter_helper_get_word(string, symbol):
 def delimiter_helper_next(string, symbol):
     if not string:
         return []
-    if string[0] == symbol and string[1] != symbol:
+    if len(string) > 1 and string[0] == symbol and string[1] != symbol:
         return [delimiter_helper_get_word(string[1:], symbol)] + delimiter_helper_next(string[1:], symbol)
     return delimiter_helper_next(string[1:], symbol)
 
