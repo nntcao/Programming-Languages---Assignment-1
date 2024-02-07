@@ -48,6 +48,23 @@ def unique(l):
         return unique(l[1:])
     return [l[0]] + unique(l[1:])
 
+def merge(l1, l2):
+    if not l1:
+        return l2
+    if not l2:
+        return l1
+    if l1[0] <= l2[0]:
+        return [l1[0]] + merge(l1[1:], l2)
+    return [l2[0]] + merge(l1, l2[1:])
+
+def merge_sort(l):
+    if len(l) == 1:
+        return l
+    return merge(merge_sort(l[0:len(l)//2]), merge_sort(l[len(l)//2:]))
+
+# sort list l ascending order using merge sort
+def sort(l):
+    return merge_sort(l)
 def main():
 
     # file and sys I/O
