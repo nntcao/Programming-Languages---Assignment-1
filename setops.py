@@ -67,6 +67,10 @@ def unique_when_sorted(sorted_list):
     if not sorted_list:
         return []
     return [sorted_list[0]] + unique_when_sorted_helper(sorted_list[1:], sorted_list[0])
+
+def text_input_to_sorted_word_set(string):
+    return unique_when_sorted(sort(list(map(to_lower, delimiter(remove_symbols(string, ["!", "?", "'", "\"", ".", ",", "/", "\\", "~", "-", "(", ")"]), " ")))))
+
 def merge(l1, l2):
     if not l1:
         return l2
@@ -98,6 +102,13 @@ def main():
 
     file1.close()
     file2.close()
+
+    # operations
+    word_set_1 = text_input_to_sorted_word_set(text1)
+    word_set_2 = text_input_to_sorted_word_set(text2)
+    print(word_set_1)
+    print(word_set_2)
+
 
 if __name__ == "__main__":
     main()
