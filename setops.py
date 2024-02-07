@@ -137,7 +137,7 @@ def merge(l1, l2):
 
 
 def merge_sort(l):
-    if len(l) == 1:
+    if len(l) <= 1:
         return l
     return merge(merge_sort(l[0:len(l)//2]), merge_sort(l[len(l)//2:]))
 
