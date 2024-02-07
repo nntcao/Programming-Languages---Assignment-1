@@ -25,6 +25,11 @@ def remove_symbol(string, symbol):
         return remove_symbol(string[1:], symbol)
     return string[0] + remove_symbol(string[1:], symbol)
 
+def remove_symbols(string, symbols):
+    if not symbols:
+        return string
+    return remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
+
 def to_lower(string):
     if not string:
         return ""
