@@ -79,6 +79,7 @@ def to_lower(string: str):
         return chr(ord(string[0]) + 32) + to_lower(string[1:])
     return string[0] + to_lower(string[1:])
 
+
 def linear_search(l: list[any], element: any):
     """Completes a linear search for the element
 
@@ -94,6 +95,7 @@ def linear_search(l: list[any], element: any):
     if l[0] == element:
         return True
     return linear_search(l[1:], element)
+
 
 def binary_search(l: list[any], element: any):
     """Completes a binary search for the element
@@ -139,6 +141,7 @@ def _unique_helper(sorted_list, curr_el):
         return _unique_helper(sorted_list[1:], curr_el)
     return [sorted_list[0]] + _unique_helper(sorted_list[1:], sorted_list[0])
 
+
 def unique(sorted_list: list[any]):
     """Removes all duplicate values from the list
 
@@ -172,6 +175,7 @@ def _merge_sort(l):
         return l
     return _merge(_merge_sort(l[0:len(l)//2]), _merge_sort(l[len(l)//2:]))
 
+
 def sort(l: list[any]):
     """Sorts a list in ascending order
 
@@ -199,6 +203,7 @@ def _difference_helper(sorted_set_1, sorted_set_2):
         return [sorted_set_1[0]] + _difference_helper(sorted_set_1[1:], sorted_set_2)
     return [sorted_set_2[0]] + _difference_helper(sorted_set_1, sorted_set_2[1:])
 
+
 def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
     """Finds the set difference of the two input sets
 
@@ -213,6 +218,7 @@ def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
         list[any]: a sorted set containing only the differences
     """
     return sort(_difference_helper(sorted_set_1, sorted_set_2))
+
 
 def union(sorted_set_1: list[any], sorted_set_2: list[any]):
     """Finds the set union of the two input sets
@@ -239,6 +245,7 @@ def _intersection_helper(sorted_set_1, sorted_set_2):
     if sorted_set_1[0] < sorted_set_2[0]:
         return _intersection_helper(sorted_set_1[1:], sorted_set_2)
     return _intersection_helper(sorted_set_1, sorted_set_2[1:])
+
 
 def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
     """Finds the set intersection of the two input sets
@@ -296,8 +303,8 @@ def string_to_sorted_word_set(string: str):
                                 ),
                                 "\t",
                                 " "
-                            ), 
-                            "\r", 
+                            ),
+                            "\r",
                             " "
                         ),
                         " "
