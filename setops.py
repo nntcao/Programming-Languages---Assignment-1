@@ -88,10 +88,74 @@ def unique_helper(sorted_list, curr_el):
 
 # returns list l with only unique values, assuming list l is sorted
 # optimized time complexity: O(n) instead of O(n^2)
+
+
 def unique(sorted_list):
     if not sorted_list:
         return []
     return [sorted_list[0]] + unique_helper(sorted_list[1:], sorted_list[0])
+
+
+def merge(l1, l2):
+    if not l1:
+        return l2
+    if not l2:
+        return l1
+    if l1[0] <= l2[0]:
+        return [l1[0]] + merge(l1[1:], l2)
+    return [l2[0]] + merge(l1, l2[1:])
+
+
+def merge_sort(l):
+    if len(l) <= 1:
+        return l
+    return merge(merge_sort(l[0:len(l)//2]), merge_sort(l[len(l)//2:]))
+
+# sort list l ascending order using merge sort
+
+
+def sort(l):
+    return merge_sort(l)
+
+
+def difference_helper(sorted_set_1, sorted_set_2):
+    if not sorted_set_1:
+        return sorted_set_2
+    if not sorted_set_2:
+        return sorted_set_1
+    if sorted_set_1[0] == sorted_set_2[0]:
+        return difference_helper(sorted_set_1[1:], sorted_set_2[1:])
+    if sorted_set_1[0] < sorted_set_2[0]:
+        return [sorted_set_1[0]] + difference_helper(sorted_set_1[1:], sorted_set_2)
+    return [sorted_set_2[0]] + difference_helper(sorted_set_1, sorted_set_2[1:])
+
+# assumes sorted ordered sets
+
+
+def difference(sorted_set_1, sorted_set_2):
+    return sort(difference_helper(sorted_set_1, sorted_set_2))
+
+# assumes sorted ordered sets
+
+
+def union(sorted_set_1, sorted_set_2):
+    return unique(sort(sorted_set_1 + sorted_set_2))
+
+
+def intersection_helper(sorted_set_1, sorted_set_2):
+    if not sorted_set_1 or not sorted_set_2:
+        return []
+    if sorted_set_1[0] == sorted_set_2[0]:
+        return [sorted_set_1[0]] + intersection_helper(sorted_set_1[1:], sorted_set_2[1:])
+    if sorted_set_1[0] < sorted_set_2[0]:
+        return intersection_helper(sorted_set_1[1:], sorted_set_2)
+    return intersection_helper(sorted_set_1, sorted_set_2[1:])
+
+# assumes sorted ordered sets
+
+
+def intersection(sorted_set_1, sorted_set_2):
+    return sort(intersection_helper(sorted_set_1, sorted_set_2))
 
 
 def text_input_to_sorted_word_set(string):
@@ -125,57 +189,6 @@ def text_input_to_sorted_word_set(string):
         )
     )
 
-
-def merge(l1, l2):
-    if not l1:
-        return l2
-    if not l2:
-        return l1
-    if l1[0] <= l2[0]:
-        return [l1[0]] + merge(l1[1:], l2)
-    return [l2[0]] + merge(l1, l2[1:])
-
-
-def merge_sort(l):
-    if len(l) <= 1:
-        return l
-    return merge(merge_sort(l[0:len(l)//2]), merge_sort(l[len(l)//2:]))
-
-# sort list l ascending order using merge sort
-def sort(l):
-    return merge_sort(l)
-
-def difference_helper(sorted_set_1, sorted_set_2):
-    if not sorted_set_1:
-        return sorted_set_2
-    if not sorted_set_2:
-        return sorted_set_1
-    if sorted_set_1[0] == sorted_set_2[0]:
-        return difference_helper(sorted_set_1[1:], sorted_set_2[1:])
-    if sorted_set_1[0] < sorted_set_2[0]:
-        return [sorted_set_1[0]] + difference_helper(sorted_set_1[1:], sorted_set_2)
-    return [sorted_set_2[0]] + difference_helper(sorted_set_1, sorted_set_2[1:])
-
-# assumes sorted ordered sets
-def difference(sorted_set_1, sorted_set_2):
-    return sort(difference_helper(sorted_set_1, sorted_set_2))
-
-# assumes sorted ordered sets
-def union(sorted_set_1, sorted_set_2):
-    return unique(sort(sorted_set_1 + sorted_set_2))
-
-def intersection_helper(sorted_set_1, sorted_set_2):
-    if not sorted_set_1 or not sorted_set_2:
-        return []
-    if sorted_set_1[0] == sorted_set_2[0]:
-        return [sorted_set_1[0]] + intersection_helper(sorted_set_1[1:], sorted_set_2[1:])
-    if sorted_set_1[0] < sorted_set_2[0]:
-        return intersection_helper(sorted_set_1[1:], sorted_set_2)
-    return intersection_helper(sorted_set_1, sorted_set_2[1:])
-
-# assumes sorted ordered sets
-def intersection(sorted_set_1, sorted_set_2):
-    return sort(intersection_helper(sorted_set_1, sorted_set_2))
 
 def main():
 
