@@ -1,4 +1,19 @@
 
+def is_sorted_asc(sorted_list: list[any]):
+    """Determines if list is sorted ascending
+
+    Args:
+        sorted_list (list[any]): the list to evaluate
+
+    Returns:
+        bool: True if sorted ascending, False otherwise
+    """
+    if len(sorted_list) <= 1:
+        return True
+    if sorted_list[0] > sorted_list[1]:
+        return False
+    return is_sorted_asc(sorted_list[1:])
+
 def _delimiter_helper_get_word(string, symbol):
     # "Gets" the word until a delimiter is reached
     if not string or string[0] == symbol:
@@ -96,8 +111,16 @@ def linear_search(l: list[any], element: any):
         return True
     return linear_search(l[1:], element)
 
+def _binary_search_helper(sorted_list, element):
+    if not sorted_list:
+        return False
+    if sorted_list[len(sorted_list) // 2] == element:
+        return True
+    if sorted_list[len(sorted_list) // 2] < element:
+        return _binary_search_helper(sorted_list[len(sorted_list) // 2 + 1:], element)
+    return _binary_search_helper(sorted_list[:len(sorted_list) // 2], element)
 
-def binary_search(l: list[any], element: any):
+def binary_search(sorted_list: list[any], element: any):
     """Completes a binary search for the element
 
     Args:
@@ -107,13 +130,9 @@ def binary_search(l: list[any], element: any):
     Returns:
         bool: True if the element is found, False otherwise
     """
-    if not l:
-        return False
-    if l[len(l) // 2] == element:
-        return True
-    if l[len(l) // 2] < element:
-        return binary_search(l[len(l) // 2 + 1:], element)
-    return binary_search(l[:len(l) // 2], element)
+    if not is_sorted_asc(sorted_list):
+        raise ValueError("list must be sorted to call binary search function")
+    return _binary_search_helper(sorted_list, element)
 
 
 def replace_symbol(string: str, old_symbol: str, new_symbol: str):
@@ -155,6 +174,8 @@ def unique(sorted_list: list[any]):
     Returns:
         list[any]: the list without any duplicate values
     """
+    if not is_sorted_asc(sorted_list):
+        raise ValueError("list must be sorted to call unique function")
     if not sorted_list:
         return []
     return [sorted_list[0]] + _unique_helper(sorted_list[1:], sorted_list[0])
@@ -217,6 +238,8 @@ def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
     Returns:
         list[any]: a sorted set containing only the differences
     """
+    if not is_sorted_asc(sorted_set_1) or not is_sorted_asc(sorted_set_2):
+        raise ValueError("list must be sorted to call set difference function")
     return sort(_difference_helper(sorted_set_1, sorted_set_2))
 
 
@@ -233,6 +256,8 @@ def union(sorted_set_1: list[any], sorted_set_2: list[any]):
     Returns:
         list[any]: a sorted set union of the two input sets
     """
+    if not is_sorted_asc(sorted_set_1) or not is_sorted_asc(sorted_set_2):
+        raise ValueError("list must be sorted to call set union function")
     return unique(sort(sorted_set_1 + sorted_set_2))
 
 
@@ -260,6 +285,8 @@ def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
     Returns:
         list[any]: a sorted set intersection of the two input sets
     """
+    if not is_sorted_asc(sorted_set_1) or not is_sorted_asc(sorted_set_2):
+        raise ValueError("list must be sorted to call set intersection function")
     return sort(_intersection_helper(sorted_set_1, sorted_set_2))
 
 

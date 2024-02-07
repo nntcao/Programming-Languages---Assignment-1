@@ -1,5 +1,13 @@
 from setops import *
 
+assert is_sorted_asc([]) == True
+assert is_sorted_asc([1]) == True
+assert is_sorted_asc([1, 2, 3, 4]) == True
+assert is_sorted_asc([1, 3, 3, 4]) == True
+assert is_sorted_asc([6, 3, 3, 4]) == False
+assert is_sorted_asc(["a", "b", "c"]) == True
+assert is_sorted_asc(["a", "b", "a"]) == False
+
 assert delimiter("", " ") == []
 assert delimiter("      ", " ") == []
 assert delimiter("   -   ", " ") == ["-"]
