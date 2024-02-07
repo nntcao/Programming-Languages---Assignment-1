@@ -41,6 +41,7 @@ def exists(l, element):
     return exists(l[1:], element)
 
 # returns list l with only unique values
+# currently O(n^2), will need to optimize using sorting
 def unique(l):
     if not l:
         return []
@@ -48,6 +49,19 @@ def unique(l):
         return unique(l[1:])
     return [l[0]] + unique(l[1:])
 
+def unique_when_sorted_helper(sorted_list, curr_el):
+    if not sorted_list:
+        return []
+    if sorted_list == curr_el:
+        return unique_when_sorted_helper(sorted_list[1:], curr_el)
+    return [sorted_list[0]] + unique_when_sorted_helper(sorted_list[1:], sorted_list[0])
+
+# returns list l with only unique values, assuming list l is sorted
+# optimized time complexity: O(n) instead of O(n^2)
+def unique_when_sorted(sorted_list):
+    if not sorted_list:
+        return []
+    return [sorted_list[0]] + unique_when_sorted_helper(sorted_list[1:], sorted_list[0])
 def merge(l1, l2):
     if not l1:
         return l2
