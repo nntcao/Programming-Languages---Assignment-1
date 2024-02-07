@@ -149,15 +149,19 @@ def text_input_to_sorted_word_set(string):
                     delimiter(
                         replace_symbol(
                             replace_symbol(
-                                remove_symbols(
-                                    string,
-                                    ["!", "?", "'", "\"", ".", ",",
-                                     "/", "\\", "~", "-", "(", ")"]
+                                replace_symbol(
+                                    remove_symbols(
+                                        string,
+                                        ["!", "?", "'", "\"", ".", ",",
+                                         "/", "\\", "~", "-", "(", ")"]
+                                    ),
+                                    "\n",
+                                    " "
                                 ),
-                                "\n",
+                                "\t",
                                 " "
-                            ),
-                            "\t",
+                            ), 
+                            "\r", 
                             " "
                         ),
                         " "
