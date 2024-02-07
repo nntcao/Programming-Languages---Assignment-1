@@ -57,6 +57,15 @@ def main():
     print(to_lower("aaAAAAaa!.AAaaAAA"))
     print(unique([1,1,1,2,3,4,5,6,7,8,8,123]))
 
+    #file1 = open(set1)
+    #set1 = file1.read()
+    #print(set1)
+
+    #file2 = open(set2)
+    #set2 = file2.read()
+    #print(set2)
+    #file1.close()
+    #file2.close()
 
 if __name__ == "__main__":
     main()
