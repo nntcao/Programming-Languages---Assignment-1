@@ -1,25 +1,47 @@
 
 def _delimiter_helper_get_word(string, symbol):
+    # "Gets" the word until a delimiter is reached
     if not string or string[0] == symbol:
         return ""
     return string[0] + _delimiter_helper_get_word(string[1:], symbol)
 
 
 def _delimiter_helper_next(string, symbol):
+    # Since delimiting requires two different operations: to "get" the word, and find where the next word starts,
+    #   two helper functions are needed
     if not string:
         return []
+    # By checking if the current symbol is the delimiter AND the next is not, duplicate delimiters are ignored
     if len(string) > 1 and string[0] == symbol and string[1] != symbol:
         return [_delimiter_helper_get_word(string[1:], symbol)] + _delimiter_helper_next(string[1:], symbol)
     return _delimiter_helper_next(string[1:], symbol)
 
 
-def delimiter(string, symbol):
+def delimiter(string: str, symbol: str) -> list[str]:
+    """Splits a string by delimiter symbol into a list of strings
+    
+    Args:
+        string (str): the string to split
+        symbol (str): the single character symbol to split by
+
+    Returns:
+        list[str]: a list of strings broken up by the delimiter function.
+    """
     if not string:
         return []
     return _delimiter_helper_next(symbol + string, symbol)
 
 
 def remove_symbol(string, symbol):
+    """Removes all occurances of a symbol from a string
+
+    Args:
+        string (str): the string to remove symbols from
+        symbol (str): the single char symbol to remove
+
+    Returns:
+        str: the input string with all symbols removed
+    """
     if not string:
         return ""
     if string[0] == symbol:
@@ -27,29 +49,62 @@ def remove_symbol(string, symbol):
     return string[0] + remove_symbol(string[1:], symbol)
 
 
-def remove_symbols(string, symbols):
+def remove_symbols(string: str, symbols: list[str]):
+    """Removes all occurances symbols from a string
+
+    Args:
+        string (str): the string to remove symbols from
+        symbols (list[str]): list of symbols to remove
+
+    Returns:
+        str: the input string with all symbols removed
+    """
     if not symbols:
         return string
     return remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
 
 
-def to_lower(string):
+def to_lower(string: str):
+    """Changes all uppercase letters to lowercase letters
+
+    Args:
+        string (str): the string to change to lowercase
+
+    Returns:
+        str: lowercase version of string
+    """
     if not string:
         return ""
     if 65 <= ord(string[0]) and ord(string[0]) <= 90:
         return chr(ord(string[0]) + 32) + to_lower(string[1:])
     return string[0] + to_lower(string[1:])
 
-# checks if element exists in list l
-def linear_search(l, element):
+def linear_search(l: list[any], element: any):
+    """Completes a linear search for the element
+
+    Args:
+        l (list[any]): a list to search
+        element (any): the element to search for
+
+    Returns:
+        bool: True if the element is found, False otherwise
+    """
     if not l:
         return False
     if l[0] == element:
         return True
     return linear_search(l[1:], element)
 
+def binary_search(l: list[any], element: any):
+    """Completes a binary search for the element
 
-def binary_search(l, element):
+    Args:
+        l (list[any]): a sorted list to search
+        element (any): the element to search for
+
+    Returns:
+        bool: True if the element is found, False otherwise
+    """
     if not l:
         return False
     if l[len(l) // 2] == element:
@@ -59,7 +114,17 @@ def binary_search(l, element):
     return binary_search(l[:len(l) // 2], element)
 
 
-def replace_symbol(string, old_symbol, new_symbol):
+def replace_symbol(string: str, old_symbol: str, new_symbol: str):
+    """Replaces all old symbols with new symbols in a string
+
+    Args:
+        string (str): the string to replace symbols in
+        old_symbol (str): the old symbol to be replaced
+        new_symbol (str): the new symbol to replace
+
+    Returns:
+        str: the string with the new symbols replacing the old symbols
+    """
     if not string:
         return ""
     if string[0] == old_symbol:
@@ -74,9 +139,19 @@ def _unique_helper(sorted_list, curr_el):
         return _unique_helper(sorted_list[1:], curr_el)
     return [sorted_list[0]] + _unique_helper(sorted_list[1:], sorted_list[0])
 
-# returns list l with only unique values, assuming list l is sorted
-# optimized time complexity: O(n) instead of O(n^2)
-def unique(sorted_list):
+def unique(sorted_list: list[any]):
+    """Removes all duplicate values from the list
+
+    Returns the list with only unique values. The algorithm operates under
+    the assumption the list is sorted. It executes in time complexity of
+    O(n).
+
+    Args:
+        sorted_list (list[any]): a sorted list
+
+    Returns:
+        list[any]: the list without any duplicate values
+    """
     if not sorted_list:
         return []
     return [sorted_list[0]] + _unique_helper(sorted_list[1:], sorted_list[0])
@@ -97,12 +172,23 @@ def _merge_sort(l):
         return l
     return _merge(_merge_sort(l[0:len(l)//2]), _merge_sort(l[len(l)//2:]))
 
-# sort list l ascending order using merge sort
-def sort(l):
+def sort(l: list[any]):
+    """Sorts a list in ascending order
+
+    This sorting operation is implemented using merge sort. The time complexity
+    is O(n * log(n)).
+
+    Args:
+        l (list[any]): the list to be sorted
+
+    Returns:
+        list[any]: the sorted list in ascending order
+    """
     return _merge_sort(l)
 
 
 def _difference_helper(sorted_set_1, sorted_set_2):
+    # since they are both sorted, we can exploit that and search for an "equal" word in O(n+m) time
     if not sorted_set_1:
         return sorted_set_2
     if not sorted_set_2:
@@ -113,16 +199,39 @@ def _difference_helper(sorted_set_1, sorted_set_2):
         return [sorted_set_1[0]] + _difference_helper(sorted_set_1[1:], sorted_set_2)
     return [sorted_set_2[0]] + _difference_helper(sorted_set_1, sorted_set_2[1:])
 
-# assumes sorted ordered sets
-def difference(sorted_set_1, sorted_set_2):
+def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
+    """Finds the set difference of the two input sets
+
+    This operation assumes two properties of the inputs: a sorted list, and a set,
+    which implies all elements are unique.
+
+    Args:
+        sorted_set_1 (list[any]): the first sorted set
+        sorted_set_2 (list[any]): the second sorted set
+
+    Returns:
+        list[any]: a sorted set containing only the differences
+    """
     return sort(_difference_helper(sorted_set_1, sorted_set_2))
 
-# assumes sorted ordered sets
-def union(sorted_set_1, sorted_set_2):
+def union(sorted_set_1: list[any], sorted_set_2: list[any]):
+    """Finds the set union of the two input sets
+
+    This operation assumes two properties of the inputs: a sorted list, and a set,
+    which implies all elements are unique.
+
+    Args:
+        sorted_set_1 (list[any]): the first sorted set
+        sorted_set_2 (list[any]): the second sorted set
+
+    Returns:
+        list[any]: a sorted set union of the two input sets
+    """
     return unique(sort(sorted_set_1 + sorted_set_2))
 
 
 def _intersection_helper(sorted_set_1, sorted_set_2):
+    # since they are both sorted, we can exploit that and search for an "equal" word in O(n+m) time
     if not sorted_set_1 or not sorted_set_2:
         return []
     if sorted_set_1[0] == sorted_set_2[0]:
@@ -131,16 +240,42 @@ def _intersection_helper(sorted_set_1, sorted_set_2):
         return _intersection_helper(sorted_set_1[1:], sorted_set_2)
     return _intersection_helper(sorted_set_1, sorted_set_2[1:])
 
-# assumes sorted ordered sets
-def intersection(sorted_set_1, sorted_set_2):
+def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
+    """Finds the set intersection of the two input sets
+
+    This operation assumes two properties of the inputs: a sorted list, and a set,
+    which implies all elements are unique.
+
+    Args:
+        sorted_set_1 (list[any]): the first sorted set
+        sorted_set_2 (list[any]): the second sorted set
+
+    Returns:
+        list[any]: a sorted set intersection of the two input sets
+    """
     return sort(_intersection_helper(sorted_set_1, sorted_set_2))
 
 
-def text_input_to_sorted_word_set(string):
-    # expanded for readability---lovely scheme-esque formatting :)
+def string_to_sorted_word_set(string: str):
+    """Organizes a string into a sorted word set
 
-    # removes punctuation, replaces \t and \n with spaces so that the delimiter can capture all words, then sets all words to lowercase
-    # afterwards, sorts the list of words, then removes elements for a unique list
+    Takes a string and cleans it of all punctuation. Then, it replaces
+    all \\n, \\r, and \\t characters with a space character. This is so
+    all words are captured and aren't accidently combined.
+
+    After cleaning, the delimiter is executed and a list of words is received.
+    The list of words are all transformed to lowercase using the map function.
+
+    Finally, the list of words are sorted and duplicates are removed, which
+    creates the sorted word set.
+
+    Args:
+        string (str): the string to make a word set of
+
+    Returns:
+        list[str]: a sorted set of words made up of the words in the string
+    """
+    # expanded for readability---lovely scheme-esque formatting :)
     return unique(
         sort(
             list(
@@ -188,8 +323,8 @@ def main():
     file2.close()
 
     # operations
-    sorted_word_set_1 = text_input_to_sorted_word_set(text1)
-    sorted_word_set_2 = text_input_to_sorted_word_set(text2)
+    sorted_word_set_1 = string_to_sorted_word_set(text1)
+    sorted_word_set_2 = string_to_sorted_word_set(text2)
     print(sorted_word_set_1)
     print(sorted_word_set_2)
 
