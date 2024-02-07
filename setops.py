@@ -32,6 +32,22 @@ def to_lower(string):
         return chr(ord(string[0]) + 32) + to_lower(string[1:])
     return string[0] + to_lower(string[1:])
 
+# checks if element exists in list l
+def exists(l, element):
+    if not l:
+        return False
+    if l[0] == element:
+        return True
+    return exists(l[1:], element)
+
+# returns list l with only unique values
+def unique(l):
+    if not l:
+        return []
+    if exists(l[1:], l[0]):
+        return unique(l[1:])
+    return [l[0]] + unique(l[1:])
+
 def main():
     print(delimiter("sudden attack", " "))
     print(delimiter("      sudden attack", " "))
@@ -39,6 +55,7 @@ def main():
     print(delimiter(" sudden          attack parrot chopper test", " "))
     print(remove_symbol("Dog jump over moon. And shot, at sun. And become world.", "."))
     print(to_lower("aaAAAAaa!.AAaaAAA"))
+    print(unique([1,1,1,2,3,4,5,6,7,8,8,123]))
 
 
 if __name__ == "__main__":
