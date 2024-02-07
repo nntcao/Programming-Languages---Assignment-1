@@ -49,23 +49,19 @@ def unique(l):
     return [l[0]] + unique(l[1:])
 
 def main():
-    print(delimiter("sudden attack", " "))
-    print(delimiter("      sudden attack", " "))
-    print(delimiter(" sudden          attack", " "))
-    print(delimiter(" sudden          attack parrot chopper test", " "))
-    print(remove_symbol("Dog jump over moon. And shot, at sun. And become world.", "."))
-    print(to_lower("aaAAAAaa!.AAaaAAA"))
-    print(unique([1,1,1,2,3,4,5,6,7,8,8,123]))
 
-    #file1 = open(set1)
-    #set1 = file1.read()
-    #print(set1)
+    # file and sys I/O
+    filepath_1 = "./test/a.txt"
+    filepath_2 = "./test/b.txt"
 
-    #file2 = open(set2)
-    #set2 = file2.read()
-    #print(set2)
-    #file1.close()
-    #file2.close()
+    file1 = open(filepath_1)
+    text1 = file1.read()
+
+    file2 = open(filepath_2)
+    text2 = file2.read()
+
+    file1.close()
+    file2.close()
 
 if __name__ == "__main__":
     main()
