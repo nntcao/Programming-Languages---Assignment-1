@@ -67,16 +67,6 @@ def replace_symbol(string, old_symbol, new_symbol):
     return string[0] + replace_symbol(string[1:], old_symbol, new_symbol)
 
 
-# returns list l with only unique values
-# O(n^2) algorithm
-def unique_n2(l):
-    if not l:
-        return []
-    if linear_search(l[1:], l[0]):
-        return unique_n2(l[1:])
-    return [l[0]] + unique_n2(l[1:])
-
-
 def _unique_helper(sorted_list, curr_el):
     if not sorted_list:
         return []

@@ -84,14 +84,6 @@ assert replace_symbol("askjdhfkj\tsdfh", "\\", "\t") == "askjdhfkj\tsdfh"
 assert replace_symbol("askjdhfkj\\sdfh", "\\", "\t") == "askjdhfkj\tsdfh"
 assert replace_symbol("askjdhfkj\nsdfh", "\n", " ") == "askjdhfkj sdfh"
 
-assert unique_n2([]) == []
-assert unique_n2(["a"]) == ["a"]
-assert unique_n2(["a", "a"]) == ["a"]
-assert unique_n2(["a", "b"]) == ["a", "b"]
-assert unique_n2(["a", "a", "a"]) == ["a"]
-assert unique_n2(["a", "b", "a"]) == ["b", "a"]
-assert unique_n2(["aca", "b", "a"]) == ["aca", "b", "a"]
-
 assert unique([]) == []
 assert unique(["a"]) == ["a"]
 assert unique(["a", "a"]) == ["a"]
