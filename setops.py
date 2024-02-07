@@ -263,8 +263,9 @@ def string_to_sorted_word_set(string: str):
     all \\n, \\r, and \\t characters with a space character. This is so
     all words are captured and aren't accidently combined.
 
-    After cleaning, the delimiter is executed and a list of words is received.
-    The list of words are all transformed to lowercase using the map function.
+    After cleaning, the delimiter (with symbol " ") is executed and a list 
+    of words is created. The list of words are all transformed to lowercase 
+    using the map function.
 
     Finally, the list of words are sorted and duplicates are removed, which
     creates the sorted word set.
