@@ -1,6 +1,6 @@
 from setops import *
 import unittest
-
+import subprocess
 
 class TestSortMethods(unittest.TestCase):
 
@@ -226,6 +226,41 @@ class TestSetMethods(unittest.TestCase):
                          "alpha", "beta", "omega"]), ["alpha", "beta"])
         self.assertEqual(intersection(["beta", "omega"], [
                          "alpha", "beta", "omega"]), ["beta", "omega"])
+
+
+class TestSetOps(unittest.TestCase):
+
+    def test_setops(self):
+        def generate_setops_cmd(set1, set2, operation):
+            return f"python setops.py \"set1={set1};set2={set2};operation={operation}\""
+
+        def read_output_txt():
+            with open("output.txt", "r") as o:
+                return o.read()
+            
+        def read_txt(filepath):
+            with open(filepath, "r") as f:
+                return f.read()
+        
+        def run_test(set1, set2, operation, answer):
+            subprocess.run(generate_setops_cmd(set1, set2, operation))
+            self.assertEqual(read_output_txt(), read_txt(answer))
+        
+        run_test("./test/a.txt", "./test/b.txt", "intersection", "./test/a_b_intersection.txt")
+        run_test("./test/a.txt", "./test/b.txt", "union", "./test/a_b_union.txt")
+        run_test("./test/a.txt", "./test/b.txt", "difference", "./test/a_b_difference.txt")
+
+        run_test("./test/c.txt", "./test/d.txt", "intersection", "./test/c_d_intersection.txt")
+        run_test("./test/c.txt", "./test/d.txt", "union", "./test/c_d_union.txt")
+        run_test("./test/c.txt", "./test/d.txt", "difference", "./test/c_d_difference.txt")
+
+        run_test("./test/e.txt", "./test/f.txt", "intersection", "./test/e_f_intersection.txt")
+        run_test("./test/e.txt", "./test/f.txt", "union", "./test/e_f_union.txt")
+        run_test("./test/e.txt", "./test/f.txt", "difference", "./test/e_f_difference.txt")
+
+        run_test("./test/g.txt", "./test/h.txt", "intersection", "./test/g_h_intersection.txt")
+        run_test("./test/g.txt", "./test/h.txt", "union", "./test/g_h_union.txt")
+        run_test("./test/g.txt", "./test/h.txt", "difference", "./test/g_h_difference.txt")
 
 
 if __name__ == '__main__':
