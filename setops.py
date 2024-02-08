@@ -1,3 +1,4 @@
+import sys
 
 def is_sorted_asc(sorted_list: list[any]):
     """Determines if list is sorted ascending
@@ -342,30 +343,77 @@ def string_to_sorted_word_set(string: str):
     )
 
 
+def get_cli_input() -> list[str]:
+    if len(sys.argv) != 2:
+        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        exit(1)
+
+    text_cli_args = sys.argv[1]
+    var_list = delimiter(text_cli_args, ";")
+
+    if len(var_list) != 3:
+        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        exit(1)
+
+    filepath_1 = delimiter(var_list[0], "=")
+    filepath_2 = delimiter(var_list[1], "=")
+    operation = delimiter(var_list[2], "=")
+
+    if len(filepath_1) != 2 or len(filepath_2) != 2 or len(operation) != 2:
+        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        exit(1)
+
+    if not (operation[1] == "difference" or operation[1] == "union" or operation[1] == "intersection"):
+        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        exit(1)
+
+    return [filepath_1[1], filepath_2[1], operation[1]]
+
+
+def write_output_helper(output_file, results: list[str]):
+    if not results:
+        return []
+    output_file.write("\n" + results[0])
+    return write_output_helper(output_file, results[1:])
+
+def write_output(results: list[str]) -> list[str]:
+    with open("output.txt", "w") as output_file:
+        if not results:
+            output_file.write("empty set")
+        else:
+            output_file.write(results[0])
+            write_output_helper(output_file, results[1:])
+
+
 def main():
 
-    # file and sys I/O
-    filepath_1 = "./test/a.txt"
-    filepath_2 = "./test/b.txt"
+    filepath_1, filepath_2, operation = get_cli_input()
 
-    file1 = open(filepath_1)
-    text1 = file1.read()
+    try:
+        file1 = open(filepath_1)
+    except OSError:
+        print("Could not open file: " + filepath_1)
+        sys.exit(1)
 
-    file2 = open(filepath_2)
-    text2 = file2.read()
+    try:
+        file2 = open(filepath_2)
+    except OSError:
+        print("Could not open file: " + filepath_2)
+        sys.exit(1)
+    
+    with file1, file2:
+        text1 = file1.read()
+        text2 = file2.read()
 
-    file1.close()
-    file2.close()
-
-    # operations
     sorted_word_set_1 = string_to_sorted_word_set(text1)
     sorted_word_set_2 = string_to_sorted_word_set(text2)
-    print(sorted_word_set_1)
-    print(sorted_word_set_2)
 
-    print(difference(sorted_word_set_1, sorted_word_set_2))
-    print(union(sorted_word_set_1, sorted_word_set_2))
-    print(intersection(sorted_word_set_1, sorted_word_set_2))
+    if operation == "difference":
+        write_output(difference(sorted_word_set_1, sorted_word_set_2))
+    if operation == "union":
+        write_output(union(sorted_word_set_1, sorted_word_set_2))
+    if operation == "intersection":
+        write_output(intersection(sorted_word_set_1, sorted_word_set_2))
 
 
 if __name__ == "__main__":
