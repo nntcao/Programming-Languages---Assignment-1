@@ -1,5 +1,6 @@
 import sys
 
+
 def is_sorted_asc(sorted_list: list[any]):
     """Determines if list is sorted ascending
 
@@ -14,6 +15,7 @@ def is_sorted_asc(sorted_list: list[any]):
     if sorted_list[0] > sorted_list[1]:
         return False
     return is_sorted_asc(sorted_list[1:])
+
 
 def _delimiter_helper_get_word(string, symbol):
     # "Gets" the word until a delimiter is reached
@@ -112,6 +114,7 @@ def linear_search(l: list[any], element: any):
         return True
     return linear_search(l[1:], element)
 
+
 def _binary_search_helper(sorted_list, element):
     if not sorted_list:
         return False
@@ -120,6 +123,7 @@ def _binary_search_helper(sorted_list, element):
     if sorted_list[len(sorted_list) // 2] < element:
         return _binary_search_helper(sorted_list[len(sorted_list) // 2 + 1:], element)
     return _binary_search_helper(sorted_list[:len(sorted_list) // 2], element)
+
 
 def binary_search(sorted_list: list[any], element: any):
     """Completes a binary search for the element
@@ -287,7 +291,8 @@ def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
         list[any]: a sorted set intersection of the two input sets
     """
     if not is_sorted_asc(sorted_set_1) or not is_sorted_asc(sorted_set_2):
-        raise ValueError("list must be sorted to call set intersection function")
+        raise ValueError(
+            "list must be sorted to call set intersection function")
     return sort(_intersection_helper(sorted_set_1, sorted_set_2))
 
 
@@ -345,14 +350,16 @@ def string_to_sorted_word_set(string: str):
 
 def get_cli_input() -> list[str]:
     if len(sys.argv) != 2:
-        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        print(
+            "Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
         exit(1)
 
     text_cli_args = sys.argv[1]
     var_list = delimiter(text_cli_args, ";")
 
     if len(var_list) != 3:
-        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        print(
+            "Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
         exit(1)
 
     filepath_1 = delimiter(var_list[0], "=")
@@ -360,11 +367,13 @@ def get_cli_input() -> list[str]:
     operation = delimiter(var_list[2], "=")
 
     if len(filepath_1) != 2 or len(filepath_2) != 2 or len(operation) != 2:
-        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        print(
+            "Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
         exit(1)
 
     if not (operation[1] == "difference" or operation[1] == "union" or operation[1] == "intersection"):
-        print("Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
+        print(
+            "Usage: setops.py \"set1=[filename];set2=[filename];operation=[difference|union|intersection]\"")
         exit(1)
 
     return [filepath_1[1], filepath_2[1], operation[1]]
@@ -375,6 +384,7 @@ def write_output_helper(output_file, results: list[str]):
         return []
     output_file.write("\n" + results[0])
     return write_output_helper(output_file, results[1:])
+
 
 def write_output(results: list[str]) -> list[str]:
     with open("output.txt", "w") as output_file:
@@ -400,20 +410,20 @@ def main():
     except OSError:
         print("Could not open file: " + filepath_2)
         sys.exit(1)
-    
+
     with file1, file2:
         text1 = file1.read()
         text2 = file2.read()
 
-    sorted_word_set_1 = string_to_sorted_word_set(text1)
-    sorted_word_set_2 = string_to_sorted_word_set(text2)
-
     if operation == "difference":
-        write_output(difference(sorted_word_set_1, sorted_word_set_2))
+        write_output(difference(string_to_sorted_word_set(
+            text1), string_to_sorted_word_set(text2)))
     if operation == "union":
-        write_output(union(sorted_word_set_1, sorted_word_set_2))
+        write_output(union(string_to_sorted_word_set(
+            text1), string_to_sorted_word_set(text2)))
     if operation == "intersection":
-        write_output(intersection(sorted_word_set_1, sorted_word_set_2))
+        write_output(intersection(string_to_sorted_word_set(
+            text1), string_to_sorted_word_set(text2)))
 
 
 if __name__ == "__main__":
