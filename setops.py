@@ -165,6 +165,7 @@ def replace_symbols(string: str, old_symbols: list[str], new_symbol: str):
         return string
     return replace_symbols(replace_symbol(string, old_symbols[0], new_symbol), old_symbols[1:], new_symbol)
 
+
 def _unique_helper(sorted_list, curr_el):
     if not sorted_list:
         return []
@@ -330,21 +331,10 @@ def string_to_sorted_word_set(string: str):
                 map(
                     to_lower,
                     delimiter(
-                        replace_symbol(
-                            replace_symbol(
-                                replace_symbol(
-                                    remove_symbols(
-                                        string,
-                                        ["!", "?", "'", "\"", ".", ",",
-                                         "/", "\\", "~", "-", "(", ")"]
-                                    ),
-                                    "\n",
-                                    " "
-                                ),
-                                "\t",
-                                " "
-                            ),
-                            "\r",
+                        replace_symbols(
+                            string,
+                            ["!", "?", "'", "\"", ".", ",", "/", "\\",
+                                "~", "-", "(", ")", "\n", "\t", "\r"],
                             " "
                         ),
                         " "
