@@ -158,6 +158,13 @@ def replace_symbol(string: str, old_symbol: str, new_symbol: str):
     return string[0] + replace_symbol(string[1:], old_symbol, new_symbol)
 
 
+def replace_symbols(string: str, old_symbols: list[str], new_symbol: str):
+    if not string:
+        return ""
+    if not old_symbols:
+        return string
+    return replace_symbols(replace_symbol(string, old_symbols[0], new_symbol), old_symbols[1:], new_symbol)
+
 def _unique_helper(sorted_list, curr_el):
     if not sorted_list:
         return []

@@ -98,6 +98,10 @@ class TestStringMethods(unittest.TestCase):
             "askjdhfkj\nsdfh", "\n", " "), "askjdhfkj sdfh")
 
 
+    def test_replace_symbols(self):
+        self.assertEqual(replace_symbols("abcdefg", ["a", "b"], "c"), "cccdefg")
+
+
 class TestSearchMethods(unittest.TestCase):
 
     def test_linear_search(self):
