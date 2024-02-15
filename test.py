@@ -125,7 +125,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(replace_periods("This is a sentence.Testing!"), "This is a sentence Testing!")
         self.assertEqual(replace_periods("This is a 0.Testing!"), "This is a 0 Testing!")
         self.assertEqual(replace_periods("This is a 0.1 Testing!"), "This is a 0.1 Testing!")
-
+        self.assertEqual(replace_periods("123.456.789"), "123.456 789")
+        self.assertEqual(replace_periods("123.456.789.012"), "123.456 789.012")
+        self.assertEqual(replace_periods("trying.this.out 123.456.789.012 123.456 123. and .123"), "trying this out 123.456 789.012 123.456 123  and  123")
 
 class TestSearchMethods(unittest.TestCase):
 
