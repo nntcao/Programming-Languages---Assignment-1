@@ -438,7 +438,7 @@ def write_output_helper(output_file, results: list[str]):
 
 
 def write_output(results: list[str]) -> list[str]:
-    with open("output.txt", "w") as output_file:
+    with open("result.txt", "w") as output_file:
         if not results:
             output_file.write("empty set")
         else:
