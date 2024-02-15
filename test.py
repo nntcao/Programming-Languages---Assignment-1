@@ -101,6 +101,30 @@ class TestStringMethods(unittest.TestCase):
     def test_replace_symbols(self):
         self.assertEqual(replace_symbols(
             "abcdefg", ["a", "b"], "c"), "cccdefg")
+        
+    def test_is_numeric(self):
+        self.assertEqual(is_numeric("a"), False)
+        self.assertEqual(is_numeric("%"), False)
+        self.assertEqual(is_numeric("!"), False)
+        self.assertEqual(is_numeric(";"), False)
+        self.assertEqual(is_numeric("1"), True)
+        self.assertEqual(is_numeric("2"), True)
+        self.assertEqual(is_numeric("3"), True)
+        self.assertEqual(is_numeric("4"), True)
+        self.assertEqual(is_numeric("5"), True)
+        self.assertEqual(is_numeric("6"), True)
+        self.assertEqual(is_numeric("7"), True)
+        self.assertEqual(is_numeric("8"), True)
+        self.assertEqual(is_numeric("9"), True)
+        self.assertEqual(is_numeric("0"), True)
+        self.assertEqual(is_numeric("10"), False)
+
+
+    def test_replace_periods(self):
+        self.assertEqual(replace_periods("This is a sentence."), "This is a sentence ")
+        self.assertEqual(replace_periods("This is a sentence.Testing!"), "This is a sentence Testing!")
+        self.assertEqual(replace_periods("This is a 0.Testing!"), "This is a 0 Testing!")
+        self.assertEqual(replace_periods("This is a 0.1 Testing!"), "This is a 0.1 Testing!")
 
 
 class TestSearchMethods(unittest.TestCase):

@@ -37,7 +37,7 @@ def _delimiter_helper_next(string, symbol):
 
 def delimiter(string: str, symbol: str) -> list[str]:
     """Splits a string by delimiter symbol into a list of strings
-    
+
     Args:
         string (str): the string to split
         symbol (str): the single character symbol to split by
@@ -304,6 +304,43 @@ def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
     return sort(_intersection_helper(sorted_set_1, sorted_set_2))
 
 
+def is_numeric(string: str):
+    """Checks if character is numeric
+
+    Args:
+        string (str): character to check
+
+    Returns:
+        bool: True/False if numeric
+    """
+    if len(string) != 1:
+        return False
+    return binary_search("0123456789", string)
+
+
+def _replace_periods_helper(string: str):
+    if len(string) < 3:
+        return string
+    if string[1] == "." and not (is_numeric(string[0]) and is_numeric(string[2])): 
+        return string[0] + _replace_periods_helper(" " + string[2:])
+    return string[0] + _replace_periods_helper(string[1:])
+
+
+def replace_periods(string: str):
+    """Replaces periods with spaces unless they are between two integers
+    
+    Args:
+        string (str): the string to replace periods in
+
+    Returns:
+        str: string with periods replaced
+    """
+    if not string:
+        return ""
+    return _replace_periods_helper(" " + string + " ")[1:-1]
+    
+
+
 def string_to_sorted_word_set(string: str):
     """Organizes a string into a sorted word set
 
@@ -331,11 +368,13 @@ def string_to_sorted_word_set(string: str):
                 map(
                     to_lower,
                     delimiter(
-                        replace_symbols(
-                            string,
-                            ["!", "?", "'", "\"", ".", ",", "/", "\\", "~", "-",
-                                "(", ")", "\n", "\t", "\r", ";", ":", "[", "]", "{", "}"],
-                            " "
+                        replace_periods(
+                            replace_symbols(
+                                string,
+                                ["!", "?", "'", "\"", ",", "/", "\\", "~", "-",
+                                    "(", ")", "\n", "\t", "\r", ";", ":", "[", "]", "{", "}", "+", "-", "&", "*", "%", "$", "@", "#", "^", "_", "=", "`", "<", ">", "|"],
+                                " "
+                            ),
                         ),
                         " "
                     )
