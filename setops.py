@@ -228,18 +228,18 @@ def sort(l: list[any]):
 def _difference_helper(sorted_set_1, sorted_set_2):
     # since they are both sorted, we can exploit that and search for an "equal" word in O(n+m) time
     if not sorted_set_1:
-        return sorted_set_2
+        return []
     if not sorted_set_2:
         return sorted_set_1
     if sorted_set_1[0] == sorted_set_2[0]:
         return _difference_helper(sorted_set_1[1:], sorted_set_2[1:])
     if sorted_set_1[0] < sorted_set_2[0]:
         return [sorted_set_1[0]] + _difference_helper(sorted_set_1[1:], sorted_set_2)
-    return [sorted_set_2[0]] + _difference_helper(sorted_set_1, sorted_set_2[1:])
+    return _difference_helper(sorted_set_1, sorted_set_2[1:])
 
 
 def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
-    """Finds the set difference of the two input sets
+    """Finds the set difference sorted_set_1 minus sorted_set_2
 
     This operation assumes two properties of the inputs: a sorted list, and a set,
     which implies all elements are unique.
@@ -249,7 +249,7 @@ def difference(sorted_set_1: list[any], sorted_set_2: list[any]):
         sorted_set_2 (list[any]): the second sorted set
 
     Returns:
-        list[any]: a sorted set containing only the differences
+        list[any]: a sorted set containing the set difference
     """
     if not is_sorted_asc(sorted_set_1) or not is_sorted_asc(sorted_set_2):
         raise ValueError("list must be sorted to call set difference function")
@@ -355,7 +355,6 @@ def replace_periods(string: str):
         return ""
     return _replace_periods_helper(" " + string + " ", generate_boolean_array(len(string)))[1:-1]
     
-
 
 def string_to_sorted_word_set(string: str):
     """Organizes a string into a sorted word set

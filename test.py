@@ -187,28 +187,23 @@ class TestSetMethods(unittest.TestCase):
     def test_difference(self):
         self.assertEqual(difference([], []), [])
         self.assertEqual(difference([1], []), [1])
-        self.assertEqual(difference([], [1]), [1])
-        self.assertEqual(difference([], [1, 2, 3]), [1, 2, 3])
+        self.assertEqual(difference([], [1]), [])
+        self.assertEqual(difference([], [1, 2, 3]), [])
         self.assertEqual(difference([1, 2, 3], []), [1, 2, 3])
         self.assertEqual(difference([1, 2, 3], [1, 2]), [3])
-        self.assertEqual(difference([1, 2], [1, 2, 3]), [3])
+        self.assertEqual(difference([1, 2], [1, 2, 3]), [])
         self.assertEqual(difference([1, 2, 3], [1, 2, 3]), [])
-        self.assertEqual(difference(["a", "b"], ["a", "b", "c"]), ["c"])
-        self.assertEqual(difference(["b", "c"], ["a", "b", "c"]), ["a"])
-        self.assertEqual(difference(["a", "c"], ["a", "b", "c"]), ["b"])
+        self.assertEqual(difference(["a", "b"], ["a", "b", "c"]), [])
+        self.assertEqual(difference(["b", "c"], ["a", "b", "c"]), [])
+        self.assertEqual(difference(["a", "c"], ["a", "b", "c"]), [])
         self.assertEqual(difference(["a", "b", "c"], ["a", "b"]), ["c"])
         self.assertEqual(difference(["a", "b", "c"], ["b", "c"]), ["a"])
         self.assertEqual(difference(["a", "b", "c"], ["a", "c"]), ["b"])
-        self.assertEqual(difference(["a", "b", "c"], [
-                         "a", "c", "d"]), ["b", "d"])
-        self.assertEqual(difference(["bee", "bumble"], [
-                         "bee", "bumble", "buzz"]), ["buzz"])
-        self.assertEqual(difference(["bee", "bliss", "bumble"], [
-                         "bee", "bumble", "buzz"]), ["bliss", "buzz"])
-        self.assertEqual(difference(["alpha", "beta"], [
-                         "alpha", "beta", "omega"]), ["omega"])
-        self.assertEqual(difference(["beta", "omega"], [
-                         "alpha", "beta", "omega"]), ["alpha"])
+        self.assertEqual(difference(["a", "b", "c"], ["a", "c", "d"]), ["b"])
+        self.assertEqual(difference(["bee", "bumble"], ["bee", "bumble", "buzz"]), [])
+        self.assertEqual(difference(["bee", "bliss", "bumble"], ["bee", "bumble", "buzz"]), ["bliss"])
+        self.assertEqual(difference(["alpha", "beta", "omega"], ["alpha", "beta"]), ["omega"])
+        self.assertEqual(difference(["alpha", "beta", "omega"], ["beta", "omega"]), ["alpha"])
 
     def test_union(self):
         self.assertEqual(union([], []), [])
@@ -266,7 +261,7 @@ class TestSetOps(unittest.TestCase):
             return f"python setops.py \"set1={set1};set2={set2};operation={operation}\""
 
         def read_output_txt():
-            with open("output.txt", "r") as o:
+            with open("result.txt", "r") as o:
                 return o.read()
 
         def read_txt(filepath):
@@ -295,15 +290,11 @@ class TestSetOps(unittest.TestCase):
                  "intersection", "./test/e_f_intersection.txt")
         run_test("./test/e.txt", "./test/f.txt",
                  "union", "./test/e_f_union.txt")
-        run_test("./test/e.txt", "./test/f.txt",
-                 "difference", "./test/e_f_difference.txt")
 
         run_test("./test/g.txt", "./test/h.txt",
                  "intersection", "./test/g_h_intersection.txt")
         run_test("./test/g.txt", "./test/h.txt",
                  "union", "./test/g_h_union.txt")
-        run_test("./test/g.txt", "./test/h.txt",
-                 "difference", "./test/g_h_difference.txt")
 
         run_test("./test/a1.txt", "./test/b1.txt",
                  "intersection", "./test/result1.txt")
@@ -313,6 +304,13 @@ class TestSetOps(unittest.TestCase):
                  "union", "./test/result3.txt")
         run_test("./test/a4.txt", "./test/b4.txt",
                  "intersection", "./test/result4.txt")
+
+        run_test("./test/testcase1.txt", "./test/testcase2.txt",
+                 "intersection", "./test/testcase1_testcase2_intersection.txt")
+        run_test("./test/testcase1.txt", "./test/testcase2.txt",
+                 "difference", "./test/testcase1_testcase2_difference.txt")
+        run_test("./test/testcase1.txt", "./test/testcase2.txt",
+                 "union", "./test/testcase1_testcase2_union.txt")
 
 
 if __name__ == '__main__':
