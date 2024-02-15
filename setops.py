@@ -304,6 +304,20 @@ def intersection(sorted_set_1: list[any], sorted_set_2: list[any]):
     return sort(_intersection_helper(sorted_set_1, sorted_set_2))
 
 
+def is_alpha(string: str):
+    """Checks if character is an alphabetical character
+
+    Args:
+        string (str): character to check
+
+    Returns:
+        bool: True/False if numeric
+    """
+    if len(string) != 1:
+        return False
+    return binary_search("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", string)
+
+
 def is_numeric(string: str):
     """Checks if character is numeric
 
@@ -354,14 +368,34 @@ def replace_periods(string: str):
     if not string:
         return ""
     return _replace_periods_helper(" " + string + " ", generate_boolean_array(len(string)))[1:-1]
-    
+
+
+def add_space_between_letters_and_numbers(string: str):
+    """Adds a space between a letter and a number
+
+    Args:
+        string (str): string to add spaces to
+
+    Returns:
+        str: string with spaces in between letters and numbers
+    """
+
+    if not string:
+        return ""
+    if len(string) < 2:
+        return string
+    if (is_alpha(string[0]) and is_numeric(string[1])) or (is_numeric(string[0]) and is_alpha(string[1])):
+        return string[0] + " " + add_space_between_letters_and_numbers(string[1:])
+    return string[0] + add_space_between_letters_and_numbers(string[1:])
+
 
 def string_to_sorted_word_set(string: str):
     """Organizes a string into a sorted word set
 
     Takes a string and cleans it of all punctuation. Then, it replaces
     all \\n, \\r, and \\t characters with a space character. This is so
-    all words are captured and aren't accidently combined.
+    all words are captured and aren't accidently combined. Then spaces are
+    added between words and numbers.
 
     After cleaning, the delimiter (with symbol " ") is executed and a list 
     of words is created. The list of words are all transformed to lowercase 
@@ -383,13 +417,15 @@ def string_to_sorted_word_set(string: str):
                 map(
                     to_lower,
                     delimiter(
-                        replace_periods(
-                            replace_symbols(
-                                string,
-                                ["!", "?", "'", "\"", ",", "/", "\\", "~", "-",
-                                    "(", ")", "\n", "\t", "\r", ";", ":", "[", "]", "{", "}", "+", "-", "&", "*", "%", "$", "@", "#", "^", "_", "=", "`", "<", ">", "|"],
-                                " "
-                            ),
+                        add_space_between_letters_and_numbers(
+                            replace_periods(
+                                replace_symbols(
+                                    string,
+                                    ["!", "?", "'", "\"", ",", "/", "\\", "~", "-",
+                                        "(", ")", "\n", "\t", "\r", ";", ":", "[", "]", "{", "}", "+", "-", "&", "*", "%", "$", "@", "#", "^", "_", "=", "`", "<", ">", "|"],
+                                    " "
+                                )
+                            )
                         ),
                         " "
                     )

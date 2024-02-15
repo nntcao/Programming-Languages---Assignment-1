@@ -119,6 +119,25 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(is_numeric("0"), True)
         self.assertEqual(is_numeric("10"), False)
 
+    def test_is_alpha(self):
+        self.assertEqual(is_alpha("a"), True)
+        self.assertEqual(is_alpha("c"), True)
+        self.assertEqual(is_alpha("z"), True)
+        self.assertEqual(is_alpha("A"), True)
+        self.assertEqual(is_alpha("C"), True)
+        self.assertEqual(is_alpha("Z"), True)
+        self.assertEqual(is_alpha("1"), False)
+        self.assertEqual(is_alpha("7"), False)
+        self.assertEqual(is_alpha("&"), False)
+
+    def test_add_space_btwn_letter_number(self):
+        self.assertEqual(add_space_between_letters_and_numbers("abc123"), "abc 123")
+        self.assertEqual(add_space_between_letters_and_numbers("123abc"), "123 abc")
+        self.assertEqual(add_space_between_letters_and_numbers("123456"), "123456")
+        self.assertEqual(add_space_between_letters_and_numbers("abcdefg"), "abcdefg")
+        self.assertEqual(add_space_between_letters_and_numbers("1A"), "1 A")
+        self.assertEqual(add_space_between_letters_and_numbers("G1"), "G 1")
+        self.assertEqual(add_space_between_letters_and_numbers("Z4"), "Z 4")
 
     def test_replace_periods(self):
         self.assertEqual(replace_periods("This is a sentence."), "This is a sentence ")
