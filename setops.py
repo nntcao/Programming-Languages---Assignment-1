@@ -318,12 +318,28 @@ def is_numeric(string: str):
     return binary_search("0123456789", string)
 
 
-def _replace_periods_helper(string: str):
+def generate_boolean_array(n: int):
+    if n == 0:
+        return []
+    return [False] + generate_boolean_array(n - 1)
+
+
+def _mark_is_completed_number(string: str, is_completed_number: list[bool]):
+    if not is_completed_number:
+        return []
+    if is_numeric(string[0]):
+        return [True] + _mark_is_completed_number(string[1:], is_completed_number[1:])
+    return is_completed_number
+
+
+def _replace_periods_helper(string: str, is_completed_number: list[bool]):
     if len(string) < 3:
         return string
-    if string[1] == "." and not (is_numeric(string[0]) and is_numeric(string[2])): 
-        return string[0] + _replace_periods_helper(" " + string[2:])
-    return string[0] + _replace_periods_helper(string[1:])
+    if string[1] == "." and (is_numeric(string[0]) and is_numeric(string[2])) and is_completed_number[0] == False:
+        return string[0] + _replace_periods_helper(string[1:], [False] + _mark_is_completed_number(string[2:], is_completed_number[2:]))
+    if string[1] == ".":
+        return string[0] + _replace_periods_helper(" " + string[2:], is_completed_number[1:])
+    return string[0] + _replace_periods_helper(string[1:], is_completed_number[1:])
 
 
 def replace_periods(string: str):
@@ -337,7 +353,7 @@ def replace_periods(string: str):
     """
     if not string:
         return ""
-    return _replace_periods_helper(" " + string + " ")[1:-1]
+    return _replace_periods_helper(" " + string + " ", generate_boolean_array(len(string)))[1:-1]
     
 
 
