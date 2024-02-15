@@ -303,6 +303,15 @@ class TestSetOps(unittest.TestCase):
         run_test("./test/g.txt", "./test/h.txt",
                  "difference", "./test/g_h_difference.txt")
 
+        run_test("./test/a1.txt", "./test/b1.txt",
+                 "intersection", "./test/result1.txt")
+        run_test("./test/a2.txt", "./test/b2.txt",
+                 "difference", "./test/result2.txt")
+        run_test("./test/a3.txt", "./test/b3.txt",
+                 "union", "./test/result3.txt")
+        run_test("./test/a4.txt", "./test/b4.txt",
+                 "intersection", "./test/result4.txt")
+
 
 if __name__ == '__main__':
     unittest.main()
