@@ -296,7 +296,7 @@ class TestSetOps(unittest.TestCase):
             except:
                 subprocess.run(generate_py3_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation), shell=True)
 
-            self.assertEqual(read_output_txt(), read_txt(answer))
+            self.assertEqual(read_output_txt(), read_txt(os.path.abspath(answer)))
 
         run_test("./test/a.txt", "./test/b.txt",
                  "intersection", "./test/a_b_intersection.txt")
