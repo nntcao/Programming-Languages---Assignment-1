@@ -292,9 +292,9 @@ class TestSetOps(unittest.TestCase):
 
         def run_test(set1, set2, operation, answer):
             try:
-                subprocess.run(generate_py_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation))
+                subprocess.run(generate_py_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation), shell=True)
             except:
-                subprocess.run(generate_py3_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation))
+                subprocess.run(generate_py3_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation), shell=True)
 
             self.assertEqual(read_output_txt(), read_txt(answer))
 
