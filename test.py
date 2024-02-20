@@ -276,8 +276,11 @@ class TestSetMethods(unittest.TestCase):
 class TestSetOps(unittest.TestCase):
 
     def test_setops(self):
-        def generate_setops_cmd(set1, set2, operation):
+        def generate_py_setops_cmd(set1, set2, operation):
             return f"python setops.py \"set1={set1};set2={set2};operation={operation}\""
+
+        def generate_py3_setops_cmd(set1, set2, operation):
+            return f"python3 setops.py \"set1={set1};set2={set2};operation={operation}\""
 
         def read_output_txt():
             with open("result.txt", "r") as o:
@@ -288,7 +291,11 @@ class TestSetOps(unittest.TestCase):
                 return f.read()
 
         def run_test(set1, set2, operation, answer):
-            subprocess.run(generate_setops_cmd(set1, set2, operation))
+            try:
+                subprocess.run(generate_py_setops_cmd(set1, set2, operation))
+            except:
+                subprocess.run(generate_py3_setops_cmd(set1, set2, operation))
+
             self.assertEqual(read_output_txt(), read_txt(answer))
 
         run_test("./test/a.txt", "./test/b.txt",
