@@ -291,9 +291,9 @@ class TestSetOps(unittest.TestCase):
                 return f.read()
 
         def run_test(set1, set2, operation, answer):
-            try:
+            if sys.platform == "win32":
                 subprocess.run(generate_py_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation), shell=True)
-            except:
+            else:
                 subprocess.run(generate_py3_setops_cmd(os.path.abspath(set1), os.path.abspath(set2), operation), shell=True)
 
             self.assertEqual(read_output_txt(), read_txt(os.path.abspath(answer)))
