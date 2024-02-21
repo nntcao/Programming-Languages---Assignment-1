@@ -345,3 +345,5 @@ testDifference()
 testUnion()
 testIntersection()
 testSetOps()
+
+console.log("Success!");

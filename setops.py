@@ -1,20 +1,22 @@
 import sys
 
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+is_sorted_asc = lambda sorted_list : True if len(sorted_list) <= 1 else (False if sorted_list[0] > sorted_list[1] else is_sorted_asc(sorted_list[1:]))
+# def is_sorted_asc(sorted_list: list[any]):
+#     """Determines if list is sorted ascending
 
-def is_sorted_asc(sorted_list: list[any]):
-    """Determines if list is sorted ascending
+#     Args:
+#         sorted_list (list[any]): the list to evaluate
 
-    Args:
-        sorted_list (list[any]): the list to evaluate
-
-    Returns:
-        bool: True if sorted ascending, False otherwise
-    """
-    if len(sorted_list) <= 1:
-        return True
-    if sorted_list[0] > sorted_list[1]:
-        return False
-    return is_sorted_asc(sorted_list[1:])
+#     Returns:
+#         bool: True if sorted ascending, False otherwise
+#     """
+#     if len(sorted_list) <= 1:
+#         return True
+#     if sorted_list[0] > sorted_list[1]:
+#         return False
+#     return is_sorted_asc(sorted_list[1:])
 
 
 def _delimiter_helper_get_word(string, symbol):
@@ -50,79 +52,93 @@ def delimiter(string: str, symbol: str) -> list[str]:
     return _delimiter_helper_next(symbol + string, symbol)
 
 
-def remove_symbol(string, symbol):
-    """Removes all occurances of a symbol from a string
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+remove_symbol = lambda string, symbol : "" if not string else (remove_symbol(string[1:], symbol) if string[0] == symbol else string[0] + remove_symbol(string[1:], symbol))
+# def remove_symbol(string, symbol):
+#     """Removes all occurances of a symbol from a string
 
-    Args:
-        string (str): the string to remove symbols from
-        symbol (str): the single char symbol to remove
+#     Args:
+#         string (str): the string to remove symbols from
+#         symbol (str): the single char symbol to remove
 
-    Returns:
-        str: the input string with all symbols removed
-    """
-    if not string:
-        return ""
-    if string[0] == symbol:
-        return remove_symbol(string[1:], symbol)
-    return string[0] + remove_symbol(string[1:], symbol)
-
-
-def remove_symbols(string: str, symbols: list[str]):
-    """Removes all occurances symbols from a string
-
-    Args:
-        string (str): the string to remove symbols from
-        symbols (list[str]): list of symbols to remove
-
-    Returns:
-        str: the input string with all symbols removed
-    """
-    if not symbols:
-        return string
-    return remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
+#     Returns:
+#         str: the input string with all symbols removed
+#     """
+#     if not string:
+#         return ""
+#     if string[0] == symbol:
+#         return remove_symbol(string[1:], symbol)
+#     return string[0] + remove_symbol(string[1:], symbol)
 
 
-def to_lower(string: str):
-    """Changes all uppercase letters to lowercase letters
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+remove_symbols = lambda string, symbols : string if not symbols else remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
+# def remove_symbols(string: str, symbols: list[str]):
+#     """Removes all occurances symbols from a string
 
-    Args:
-        string (str): the string to change to lowercase
+#     Args:
+#         string (str): the string to remove symbols from
+#         symbols (list[str]): list of symbols to remove
 
-    Returns:
-        str: lowercase version of string
-    """
-    if not string:
-        return ""
-    if 65 <= ord(string[0]) and ord(string[0]) <= 90:
-        return chr(ord(string[0]) + 32) + to_lower(string[1:])
-    return string[0] + to_lower(string[1:])
-
-
-def linear_search(l: list[any], element: any):
-    """Completes a linear search for the element
-
-    Args:
-        l (list[any]): a list to search
-        element (any): the element to search for
-
-    Returns:
-        bool: True if the element is found, False otherwise
-    """
-    if not l:
-        return False
-    if l[0] == element:
-        return True
-    return linear_search(l[1:], element)
+#     Returns:
+#         str: the input string with all symbols removed
+#     """
+#     if not symbols:
+#         return string
+#     return remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
 
 
-def _binary_search_helper(sorted_list, element):
-    if not sorted_list:
-        return False
-    if sorted_list[len(sorted_list) // 2] == element:
-        return True
-    if sorted_list[len(sorted_list) // 2] < element:
-        return _binary_search_helper(sorted_list[len(sorted_list) // 2 + 1:], element)
-    return _binary_search_helper(sorted_list[:len(sorted_list) // 2], element)
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+to_lower = lambda string : "" if not string else (chr(ord(string[0]) + 32) + to_lower(string[1:]) if 65 <= ord(string[0]) and ord(string[0]) <= 90 else string[0] + to_lower(string[1:]))
+# def to_lower(string: str):
+#     """Changes all uppercase letters to lowercase letters
+
+#     Args:
+#         string (str): the string to change to lowercase
+
+#     Returns:
+#         str: lowercase version of string
+#     """
+#     if not string:
+#         return ""
+#     if 65 <= ord(string[0]) and ord(string[0]) <= 90:
+#         return chr(ord(string[0]) + 32) + to_lower(string[1:])
+#     return string[0] + to_lower(string[1:])
+
+
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+linear_search = lambda l, element : False if not l else (True if l[0] == element else linear_search(l[1:], element))
+# def linear_search(l: list[any], element: any):
+#     """Completes a linear search for the element
+
+#     Args:
+#         l (list[any]): a list to search
+#         element (any): the element to search for
+
+#     Returns:
+#         bool: True if the element is found, False otherwise
+#     """
+#     if not l:
+#         return False
+#     if l[0] == element:
+#         return True
+#     return linear_search(l[1:], element)
+
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+_binary_search_helper = lambda sorted_list, element : False if not sorted_list else (True if sorted_list[len(sorted_list) // 2] == element else (_binary_search_helper(sorted_list[len(sorted_list) // 2 + 1:], element) if sorted_list[len(sorted_list) // 2] < element else _binary_search_helper(sorted_list[:len(sorted_list) // 2], element)))
+# def _binary_search_helper(sorted_list, element):
+#     if not sorted_list:
+#         return False
+#     if sorted_list[len(sorted_list) // 2] == element:
+#         return True
+#     if sorted_list[len(sorted_list) // 2] < element:
+#         return _binary_search_helper(sorted_list[len(sorted_list) // 2 + 1:], element)
+#     return _binary_search_helper(sorted_list[:len(sorted_list) // 2], element)
 
 
 def binary_search(sorted_list: list[any], element: any):
@@ -139,23 +155,25 @@ def binary_search(sorted_list: list[any], element: any):
         raise ValueError("list must be sorted to call binary search function")
     return _binary_search_helper(sorted_list, element)
 
+# This is an equivalent lambda function--converted to satisfy assignment requirements
+# 
+replace_symbol = lambda string, old_symbol, new_symbol : "" if not string else (new_symbol + replace_symbol(string[1:], old_symbol, new_symbol) if string[0] == old_symbol else string[0] + replace_symbol(string[1:], old_symbol, new_symbol))
+# def replace_symbol(string: str, old_symbol: str, new_symbol: str):
+#     """Replaces all old symbols with new symbols in a string
 
-def replace_symbol(string: str, old_symbol: str, new_symbol: str):
-    """Replaces all old symbols with new symbols in a string
+#     Args:
+#         string (str): the string to replace symbols in
+#         old_symbol (str): the old symbol to be replaced
+#         new_symbol (str): the new symbol to replace
 
-    Args:
-        string (str): the string to replace symbols in
-        old_symbol (str): the old symbol to be replaced
-        new_symbol (str): the new symbol to replace
-
-    Returns:
-        str: the string with the new symbols replacing the old symbols
-    """
-    if not string:
-        return ""
-    if string[0] == old_symbol:
-        return new_symbol + replace_symbol(string[1:], old_symbol, new_symbol)
-    return string[0] + replace_symbol(string[1:], old_symbol, new_symbol)
+#     Returns:
+#         str: the string with the new symbols replacing the old symbols
+#     """
+#     if not string:
+#         return ""
+#     if string[0] == old_symbol:
+#         return new_symbol + replace_symbol(string[1:], old_symbol, new_symbol)
+#     return string[0] + replace_symbol(string[1:], old_symbol, new_symbol)
 
 
 def replace_symbols(string: str, old_symbols: list[str], new_symbol: str):
@@ -193,7 +211,8 @@ def unique(sorted_list: list[any]):
         return []
     return [sorted_list[0]] + _unique_helper(sorted_list[1:], sorted_list[0])
 
-
+# equivalent lambda function
+# _merge = lambda l1, l2 : l2 if not l1 else (l1 if not l2 else ([l1[0]] + _merge(l1[1:], l2) if l1[0] <= l2[0] else [l2[0]] + _merge(l1, l2[1:])))
 def _merge(l1, l2):
     if not l1:
         return l2
@@ -203,7 +222,8 @@ def _merge(l1, l2):
         return [l1[0]] + _merge(l1[1:], l2)
     return [l2[0]] + _merge(l1, l2[1:])
 
-
+# equivalent lambda function
+# _merge_sort = lambda l : l if len(l) <= 1 else _merge(_merge_sort(l[0:len(l)//2]), _merge_sort(l[len(l)//2:]))
 def _merge_sort(l):
     if len(l) <= 1:
         return l

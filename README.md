@@ -16,6 +16,8 @@ This is a program that computes set operations on files with words and numbers. 
 
 The input consists of two files and one set operation to execute (difference, union, intersection).
 
+Every function except for a few file I/O functions and the main function can be converted to a lambda function. A few functions have been converted to satisfy assignment requirements.
+
 # Running Unit Tests
 Two sets of unit tests are supplied. To run the test simply run the following commands:
 

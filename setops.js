@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-function isSortedAsc(sortedList) {
+
+const isSortedAsc = (sortedList) => {
     if (sortedList.length <= 1) {
         return true;
     }
@@ -10,22 +11,21 @@ function isSortedAsc(sortedList) {
     return isSortedAsc(sortedList.slice(1));
 }
 
-function delimiter(string, symbol) {
+const delimiter = (string, symbol) => {
     if (!string) {
         return [];
     }
-    const symbolString = symbol + string;
-    return _delimiterHelperNext(symbolString, symbol);
+    return _delimiterHelperNext(symbol + string, symbol);
 }
 
-function _delimiterHelperGetWord(string, symbol) {
+const _delimiterHelperGetWord = (string, symbol) => {
     if (!string || string[0] === symbol) {
         return "";
     }
     return string[0] + _delimiterHelperGetWord(string.slice(1), symbol);
 }
 
-function _delimiterHelperNext(string, symbol) {
+const _delimiterHelperNext = (string, symbol) => {
     if (!string) {
         return [];
     }
@@ -35,7 +35,7 @@ function _delimiterHelperNext(string, symbol) {
     return _delimiterHelperNext(string.slice(1), symbol);
 }
 
-function removeSymbol(string, symbol) {
+const removeSymbol = (string, symbol) => {
     if (!string) {
         return "";
     }
@@ -45,7 +45,7 @@ function removeSymbol(string, symbol) {
     return string[0] + removeSymbol(string.slice(1), symbol);
 }
 
-function removeSymbols(string, symbols) {
+const removeSymbols = (string, symbols) => {
     if (!symbols.length) {
         return string;
     }
