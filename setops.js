@@ -72,6 +72,16 @@ function linearSearch(list, element) {
     return linearSearch(list.slice(1), element);
 }
 
+function removeNonalphanumericExceptSpacesAndPeriods(string) {
+    if (!string) {
+        return "";
+    }
+    if ((!isAlpha(string[0])) && (!isNumeric(string[0])) && (string[0] !== " ") && (string[0] !== ".")) {
+        return removeNonalphanumericExceptSpacesAndPeriods(string.slice(1));
+    }
+    return string[0] + removeNonalphanumericExceptSpacesAndPeriods(string.slice(1));
+}
+
 function _binarySearchHelper(sortedList, element) {
     if (!sortedList.length) {
         return false;
@@ -271,17 +281,17 @@ function addSpaceBetweenLettersAndNumbers(string) {
 }
 
 function stringToSortedWordSet(string) {
-    const cleanedString = addSpaceBetweenLettersAndNumbers(
+    const cleanedString = removeNonalphanumericExceptSpacesAndPeriods(
+        addSpaceBetweenLettersAndNumbers(
             replacePeriods(
-                    replaceSymbols(
-                        string, 
-                        ["!", "?", "'", "\"", ",", "/", "\\", "~", "-","(", ")", 
-                        "\n", "\t", "\r", ";", ":", "[", "]", "{", "}", "+", "-", 
-                        "&", "*", "%", "$", "@", "#", "^", "_", "=", "`", "<", ">", "|"], 
-                        " "
-                    )
+                replaceSymbols(
+                    string, 
+                    [",", "(", ")", "|", "&", "\n", "\t", "\r"], 
+                    " "
                 )
-            );
+            )
+        )
+    );
     const wordList = delimiter(cleanedString, " ").map(toLower);
     return unique(sort(wordList));
 }
@@ -361,6 +371,7 @@ if (require.main === module) {
     main();
 } else {
     module.exports = {
+        removeNonalphanumericExceptSpacesAndPeriods,
         isSortedAsc,
         sort,
         delimiter,

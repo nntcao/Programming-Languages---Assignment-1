@@ -89,6 +89,12 @@ remove_symbols = lambda string, symbols : string if not symbols else remove_symb
 #         return string
 #     return remove_symbols(remove_symbol(string, symbols[0]), symbols[1:])
 
+def remove_nonalphanumeric_except_spaces_and_periods(string: str):
+    if not string:
+        return ""
+    if not is_alpha(string[0]) and not is_numeric(string[0]) and not string[0] == " " and not string[0] == ".":
+        return remove_nonalphanumeric_except_spaces_and_periods(string[1:])
+    return string[0] + remove_nonalphanumeric_except_spaces_and_periods(string[1:])
 
 # This is an equivalent lambda function--converted to satisfy assignment requirements
 # 
@@ -437,13 +443,14 @@ def string_to_sorted_word_set(string: str):
                 map(
                     to_lower,
                     delimiter(
-                        add_space_between_letters_and_numbers(
-                            replace_periods(
-                                replace_symbols(
-                                    string,
-                                    ["!", "?", "'", "\"", ",", "/", "\\", "~", "-",
-                                        "(", ")", "\n", "\t", "\r", ";", ":", "[", "]", "{", "}", "+", "-", "&", "*", "%", "$", "@", "#", "^", "_", "=", "`", "<", ">", "|"],
-                                    " "
+                        remove_nonalphanumeric_except_spaces_and_periods(
+                            add_space_between_letters_and_numbers(
+                                replace_periods(
+                                    replace_symbols(
+                                        string,
+                                        [",", "(", ")", "|", "&", "\n", "\t", "\r"],
+                                        " "
+                                    )
                                 )
                             )
                         ),
