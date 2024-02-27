@@ -72,14 +72,14 @@ function linearSearch(list, element) {
     return linearSearch(list.slice(1), element);
 }
 
-function removeNonalphanumericExceptSpacesAndPeriods(string) {
+function replaceNonalphanumericExceptSpacesAndPeriods(string) {
     if (!string) {
         return "";
     }
     if ((!isAlpha(string[0])) && (!isNumeric(string[0])) && (string[0] !== " ") && (string[0] !== ".")) {
-        return removeNonalphanumericExceptSpacesAndPeriods(string.slice(1));
+        return " " + replaceNonalphanumericExceptSpacesAndPeriods(string.slice(1));
     }
-    return string[0] + removeNonalphanumericExceptSpacesAndPeriods(string.slice(1));
+    return string[0] + replaceNonalphanumericExceptSpacesAndPeriods(string.slice(1));
 }
 
 function _binarySearchHelper(sortedList, element) {
@@ -281,14 +281,10 @@ function addSpaceBetweenLettersAndNumbers(string) {
 }
 
 function stringToSortedWordSet(string) {
-    const cleanedString = removeNonalphanumericExceptSpacesAndPeriods(
-        addSpaceBetweenLettersAndNumbers(
-            replacePeriods(
-                replaceSymbols(
-                    string, 
-                    [",", "(", ")", "|", "&", "\n", "\t", "\r"], 
-                    " "
-                )
+    const cleanedString = addSpaceBetweenLettersAndNumbers(
+        replacePeriods(
+            replaceNonalphanumericExceptSpacesAndPeriods(
+                string
             )
         )
     );
@@ -371,7 +367,7 @@ if (require.main === module) {
     main();
 } else {
     module.exports = {
-        removeNonalphanumericExceptSpacesAndPeriods,
+        replaceNonalphanumericExceptSpacesAndPeriods,
         isSortedAsc,
         sort,
         delimiter,

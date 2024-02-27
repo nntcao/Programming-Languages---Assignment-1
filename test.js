@@ -3,6 +3,7 @@ const assert = require('assert')
 const childProcess = require('child_process');
 
 const {
+    replaceNonalphanumericExceptSpacesAndPeriods,
     isSortedAsc,
     sort,
     delimiter,
@@ -146,6 +147,15 @@ function testisAlpha() {
     assert.deepStrictEqual(isAlpha("1"), false)
     assert.deepStrictEqual(isAlpha("7"), false)
     assert.deepStrictEqual(isAlpha("&"), false)
+}
+
+function testreplacenonAlphaNumericExceptSpacesPeriods() {
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods("ab#"), "ab ")
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods("!ab#"), " ab ")
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods("a&!*@#b#"), "a     b ")
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods("a"), "a")
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods(""), "")
+    assert.deepStrictEqual(replaceNonalphanumericExceptSpacesAndPeriods("a&!*@#b# "), "a     b  ")
 }
 
 function testaddSpaceBetweenLettersAndNumbers() {
@@ -342,6 +352,7 @@ testlinearSearch()
 testBinarySearch()
 testUnique()
 testDifference()
+testreplacenonAlphaNumericExceptSpacesPeriods()
 testUnion()
 testIntersection()
 testSetOps()

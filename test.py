@@ -148,6 +148,14 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(replace_periods("123.456.789.012"), "123.456 789.012")
         self.assertEqual(replace_periods("trying.this.out 123.456.789.012 123.456 123. and .123"), "trying this out 123.456 789.012 123.456 123  and  123")
 
+    def test_remove_alphanumeric(self):
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods("ab#"), "ab ")
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods("!ab#"), " ab ")
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods("a&!*@#b#"), "a     b ")
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods("a"), "a")
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods(""), "")
+        self.assertEqual(replace_nonalphanumeric_except_spaces_and_periods("a&!*@#b# "), "a     b  ")
+
 class TestSearchMethods(unittest.TestCase):
 
     def test_linear_search(self):
@@ -337,7 +345,6 @@ class TestSetOps(unittest.TestCase):
                  "difference", "./test/testcase1_testcase2_difference.txt")
         run_test("./test/testcase1.txt", "./test/testcase2.txt",
                  "union", "./test/testcase1_testcase2_union.txt")
-
 
 if __name__ == '__main__':
     unittest.main()
